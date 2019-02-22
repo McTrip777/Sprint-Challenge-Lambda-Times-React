@@ -17,12 +17,14 @@ export default class Content extends Component {
   } 
 
   componentDidMount() {
-    this.setState({ tabs: tabData });
-    this.setState({ cards: cardData });
+    this.setState({ 
+      tabs: tabData, 
+      cards: cardData })
   }
 
   changeSelected = tab => {
     // this function should take in the tab and update the state with the new tab.
+    this.setState({ [tab.target.name]: tab.target.value });
   };
 
   filterCards = () => {
@@ -38,8 +40,19 @@ export default class Content extends Component {
           of the items from cardData. 
         - else, it should only return those cards whose 'tab' matched this.state.selected.
     */
-    return this.state.cards;
-  };
+    if(this.state.selected === 'all'){
+      this.setState ({
+        cards: this.state.cards,
+      })
+    }
+    else{
+      this.setState({
+        cards: this.state.cards.filter(select => {
+        select.tab.includes(this.state.selected)          
+      })
+    })}
+    // return this.state.cards;
+};
 
   render() {
     return (
