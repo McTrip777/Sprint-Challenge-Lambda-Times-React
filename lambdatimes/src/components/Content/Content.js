@@ -10,7 +10,7 @@ export default class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: '',
+      selected: 'all',
       tabs: [],
       cards: []
     };
@@ -24,7 +24,7 @@ export default class Content extends Component {
 
   changeSelected = e => {
     // this function should take in the tab and update the state with the new tab.
-    this.setState({ [e.target.selected]: e.target.value });
+    this.setState({ selected: e.target.selected });
   };
 
   filterCards = () => {
@@ -41,14 +41,15 @@ export default class Content extends Component {
         - else, it should only return those cards whose 'tab' matched this.state.selected.
    */}
     if(this.state.selected === 'all'){
-      this.state.cards
+     return this.state.cards
     }
     else{
-      this.state.cards.filter(select => {
+      return(
+        this.state.cards.filter(select => {
         select.tab.includes(this.state.selected)          
-    })
+    }))
   }
-  return this.state.cards;
+  // return this.state.cards;
 };
 
   render() {
@@ -60,7 +61,7 @@ export default class Content extends Component {
           and `selectTabHandler` that includes the function to change the selected tab
         */}
         <Tabs tabs={this.state.tabs} 
-        selectedTab={this.filterCards}
+        selectedTab={this.filterCards()}
         selectTabHandler={this.changeSelected}
         />
         <Cards cards={this.filterCards()} />
